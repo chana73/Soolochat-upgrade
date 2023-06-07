@@ -43,6 +43,8 @@ public class PartyParticipate {
 	@Column(nullable = false)
 	private boolean host = false;
 
+	private String amountAlcohol;
 
+	private String reason;
 
 }

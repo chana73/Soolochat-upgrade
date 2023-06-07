@@ -19,5 +19,6 @@ public class ChatMessageRequest {
 	private Long chatRoomId;
 	private String chatRoomUniqueId;
 	private String message;
+	private String readStatus;
 
 }

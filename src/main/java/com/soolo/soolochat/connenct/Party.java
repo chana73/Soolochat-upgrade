@@ -72,6 +72,21 @@ public class Party extends Timestamped {
 	@OneToMany(mappedBy = "party", cascade = CascadeType.ALL)
 	private List<PartyParticipate> partyParticipates = new ArrayList<>();
 
+
+	private String regionName;
+	private String placeName;
+	private String placeAddress;
+	private String placeUrl;
+
+	private double distance;
+	private String stationName;
+	private double distanceFromMember;
+
+	@Column(nullable = true)
+	private String imageUrl;
+
+
+
 }
 
 

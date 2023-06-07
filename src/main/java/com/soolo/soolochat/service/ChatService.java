@@ -25,11 +25,10 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ChatService {
 
-	private final RedisTemplate<String, ChatMessage> redisTemplate;
+	/*private final RedisTemplate<String, ChatMessage> redisTemplate;
 	private final ChatMessageRepository chatMessageRepository;
 
 	public void save(ChatMessage message) {
-
 		redisTemplate.opsForList().rightPush(message.getChatRoomUniqueId().toString(), message);
 	}
 
@@ -42,7 +41,7 @@ public class ChatService {
 			chatMessageRepository.saveAll(chatMessages);
 			redisTemplate.delete(roomIdKey);
 		}
-	}
+	}*/
 
 
 }

@@ -32,6 +32,5 @@ public class ChatMessageList {
 		this.memberProfileImage = chatMessage.getMemberProfileImage();
 		this.message = chatMessage.getMessage();
 		this.createdAt = chatMessage.getCreatedAt();
-
 	}
 }

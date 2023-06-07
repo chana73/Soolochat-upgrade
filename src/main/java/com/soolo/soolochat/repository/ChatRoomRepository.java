@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.soolo.soolochat.connenct.Party;
 import com.soolo.soolochat.connenct.PartyParticipate;
 import com.soolo.soolochat.entity.ChatRoom;
 
@@ -23,6 +24,9 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     @Query("SELECT p From PartyParticipate p join fetch p.member join fetch p.party join fetch p.chatRoom cr left join fetch cr.messages m " +
         "where p.member.memberUniqueId = :memberUniqueId and p.awaiting = false order by m.createdAt desc")
     List<PartyParticipate> findByMemberId(@Param("memberUniqueId") String memberUniqueId, Pageable pageable);
+
+    @Query("SELECT p.member.profileImage from PartyParticipate p where p.party = :party order by p.host")
+    List<String> findByJoinImage(@Param("party") Party party);
 
 
 /*    @Query("SELECT CR FROM ChatRoom CR WHERE CR.roomId = :roomId")

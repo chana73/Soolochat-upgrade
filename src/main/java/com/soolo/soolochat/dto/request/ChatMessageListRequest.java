@@ -12,8 +12,8 @@ import lombok.Getter;
 @Getter
 public class ChatMessageListRequest {
 
-	private Long ChatRoomId;
-	private String ChatRoomUniqueId;
+	private Long chatRoomId;
+	private String chatRoomUniqueId;
 	private int page;
 
 }
