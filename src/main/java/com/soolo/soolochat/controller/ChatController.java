@@ -67,14 +67,8 @@ public class ChatController {
 	public void chatMessageList(@DestinationVariable("memberUniqueId") String memberUniqueId, ChatMessageListRequest chatMessageList) {
 
 		PartyParticipate partyParticipate = partyParticipateRepository.findByMemberAndChatRoom(memberUniqueId,chatMessageList.getChatRoomUniqueId());
-		System.out.println("**********");
-		System.out.println(partyParticipate.getId());
 		List<ChatCount> chatCounts = chatCountRepository.findChatCountByPartyParticipate(partyParticipate);
-		System.out.println("**********");
-		System.out.println(chatCounts.size());
 		for (ChatCount chatCount : chatCounts) {
-			System.out.println("**********");
-			System.out.println(chatCount.getId());
 			chatCount.setReadStatus(true);
 		}
 		//Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10, Sort.by("createdAt").descending());
