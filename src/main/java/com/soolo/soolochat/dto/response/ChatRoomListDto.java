@@ -28,6 +28,7 @@ public class ChatRoomListDto {
 	private long readCount;
 	private String lastMessage;
 	private LocalDateTime lastMessageTime;
+	private boolean host;
 
 	public ChatRoomListDto(PartyParticipate partyParticipate, List<String> imageList, Long readCount){
 		this.chatRoomId = partyParticipate.getChatRoom().getChatRoomId();
@@ -40,6 +41,7 @@ public class ChatRoomListDto {
 		this.readCount = readCount;
 		this.lastMessage = partyParticipate.getChatRoom().getMessages().get(0).getMessage();
 		this.lastMessageTime = partyParticipate.getChatRoom().getMessages().get(0).getCreatedAt();
+		this.host = partyParticipate.isHost();
 	}
 
 }
