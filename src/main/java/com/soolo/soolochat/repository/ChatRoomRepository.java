@@ -25,7 +25,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
         "where p.member.memberUniqueId = :memberUniqueId and p.awaiting = false order by m.createdAt desc")
     List<PartyParticipate> findByMemberId(@Param("memberUniqueId") String memberUniqueId, Pageable pageable);
 
-    @Query("SELECT p.member.profileImage from PartyParticipate p where p.party = :party order by p.host")
+    @Query("SELECT p.member.profileImage from PartyParticipate p where p.party = :party and p.awaiting = false order by p.host")
     List<String> findByJoinImage(@Param("party") Party party);
 
 
