@@ -122,9 +122,10 @@ public class ChatController {
 		List<PartyParticipate> partyParticipateList = chatRoomRepository.findByMemberId(memberUniqueId, PageRequest.of(0, 10));
 		List<ChatRoomListDto> chatRoomsList = new ArrayList<>();
 		for(PartyParticipate partyParticipate : partyParticipateList){
+			String hostUniqueId = partyParticipateRepository.findHost(partyParticipate.getParty());
 			long readNoneMessage = chatCountRepository.countBychatCount(partyParticipate);
 			List<String> imageList = chatRoomRepository.findByJoinImage(partyParticipate.getParty());
-			ChatRoomListDto chatRoomListDto = new ChatRoomListDto(partyParticipate, imageList, readNoneMessage);
+			ChatRoomListDto chatRoomListDto = new ChatRoomListDto(partyParticipate, imageList, readNoneMessage, hostUniqueId);
 			chatRoomsList.add(chatRoomListDto);
 		}
 		return chatRoomsList;
