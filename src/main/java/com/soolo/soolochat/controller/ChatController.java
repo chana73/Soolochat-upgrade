@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soolo.soolochat.connenct.Member;
@@ -130,4 +131,14 @@ public class ChatController {
 		}
 		return chatRoomsList;
 	}
+
+	// 로드밸런서 확인용
+	@GetMapping("/")
+	public String main() {
+		return "main";
+	}
+
+
+
+
 }
