@@ -137,8 +137,4 @@ public class ChatController {
 	public String main() {
 		return "main";
 	}
-
-
-
-
 }
