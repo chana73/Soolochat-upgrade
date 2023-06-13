@@ -133,7 +133,7 @@ public class ChatController {
 	}
 
 	// 로드밸런서 확인용
-	@GetMapping("/")
+	@GetMapping("/test")
 	public String main() {
 		return "main";
 	}
