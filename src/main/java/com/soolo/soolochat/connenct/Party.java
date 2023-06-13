@@ -85,6 +85,8 @@ public class Party extends Timestamped {
 	@Column(nullable = true)
 	private String imageUrl;
 
+	private boolean isDeleted = false;
+
 
 
 }

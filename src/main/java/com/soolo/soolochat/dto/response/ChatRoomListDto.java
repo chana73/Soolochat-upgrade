@@ -33,7 +33,7 @@ public class ChatRoomListDto {
 	public ChatRoomListDto(PartyParticipate partyParticipate, List<String> imageList, Long readCount, String hostUniqueId){
 		this.chatRoomId = partyParticipate.getChatRoom().getChatRoomId();
 		this.chatRoomUniqueId = partyParticipate.getChatRoom().getChatRoomUniqueId();
-		this.title = partyParticipate.getChatRoom().getTitle();
+		this.title = partyParticipate.getParty().getTitle();
 		this.imageUrl = partyParticipate.getParty().getImageUrl();
 		this.imageList = imageList;
 		this.totalCount = partyParticipate.getParty().getTotalCount();

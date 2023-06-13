@@ -47,4 +47,6 @@ public class PartyParticipate {
 
 	private String reason;
 
+	private boolean isDeleted = false;
+
 }

@@ -66,14 +66,14 @@ public class ChatController {
 	@MessageMapping("/chat/messageList/{memberUniqueId}")
 	public void chatMessageList(@DestinationVariable("memberUniqueId") String memberUniqueId, ChatMessageListRequest chatMessageList) {
 
-		PartyParticipate partyParticipate = partyParticipateRepository.findByMemberAndChatRoom(memberUniqueId,chatMessageList.getChatRoomUniqueId());
-		List<ChatCount> chatCounts = chatCountRepository.findChatCountByPartyParticipate(partyParticipate);
+		PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatMessageList.getChatRoomUniqueId());
+		List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
 		for (ChatCount chatCount : chatCounts) {
 			chatCount.setReadStatus(true);
 		}
 		//Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10, Sort.by("createdAt").descending());
 		Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10);
-		Page<ChatMessage> chatMessages = chatMessageRepository.findLatestMessageBychatRoomId(chatMessageList.getChatRoomId(), pageable);
+		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
 		List<ChatMessageList> chatMessageLists = new ArrayList<>();
 		for(ChatMessage chatMessage : chatMessages){
 
@@ -90,8 +90,8 @@ public class ChatController {
 	public void message(@DestinationVariable("chatRoomUniqueId") String chatRoomUniqueId,ChatMessageRequest chatMessageRequest) {
 
 		if(chatMessageRequest.getReadStatus() == null) {
-			ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(chatRoomUniqueId);
-			List<PartyParticipate> partyParticipateList = partyParticipateRepository.findMemberBychatRoomUniqueId(chatRoomUniqueId);
+			ChatRoom chatRoom = chatRoomRepository.findByisDeletedFalseAndChatRoomUniqueId(chatRoomUniqueId);
+			List<PartyParticipate> partyParticipateList = partyParticipateRepository.findByisDeletedFalseAndAwaitingFalseAndChatRoomChatRoomUniqueId(chatRoomUniqueId);
 
 			LocalDateTime createdAt = LocalDateTime.now();
 			ChatMessageResponse chatMessageResponse = new ChatMessageResponse(chatMessageRequest, createdAt);
@@ -109,8 +109,8 @@ public class ChatController {
 			messagingTemplate.convertAndSend("/sub/chat/message/" + chatRoomUniqueId, responseDto);
 		}
 		else{
-			PartyParticipate partyParticipate = partyParticipateRepository.findByMemberAndChatRoom(chatMessageRequest.getMemberUniqueId(), chatRoomUniqueId);
-			List<ChatCount> chatCounts = chatCountRepository.findChatCountByPartyParticipate(partyParticipate);
+			PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(chatMessageRequest.getMemberUniqueId(), chatRoomUniqueId);
+			List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
 			for (ChatCount chatCount : chatCounts) {
 				chatCount.setReadStatus(true);
 			}
@@ -119,13 +119,13 @@ public class ChatController {
 
 	public List<ChatRoomListDto> getList(String memberUniqueId){
 
-		List<PartyParticipate> partyParticipateList = chatRoomRepository.findByMemberId(memberUniqueId, PageRequest.of(0, 10));
+		List<PartyParticipate> partyParticipateList = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndAwaitingFalseOrderByChatRoomMessagesCreatedAtDesc(memberUniqueId, PageRequest.of(0, 10));
 		List<ChatRoomListDto> chatRoomsList = new ArrayList<>();
 		for(PartyParticipate partyParticipate : partyParticipateList){
-			String hostUniqueId = partyParticipateRepository.findHost(partyParticipate.getParty());
-			long readNoneMessage = chatCountRepository.countBychatCount(partyParticipate);
-			List<String> imageList = chatRoomRepository.findByJoinImage(partyParticipate.getParty());
-			ChatRoomListDto chatRoomListDto = new ChatRoomListDto(partyParticipate, imageList, readNoneMessage, hostUniqueId);
+			PartyParticipate participate = partyParticipateRepository.findByisDeletedFalseAndHostTrueAndParty(partyParticipate.getParty());
+			long readNoneMessage = chatCountRepository.countByisDeletedFalseAndPartyParticipateAndReadStatusFalse(partyParticipate);
+			List<String> imageList = partyParticipateRepository.findByJoinImage(partyParticipate.getParty());
+			ChatRoomListDto chatRoomListDto = new ChatRoomListDto(partyParticipate, imageList, readNoneMessage, participate.getMember().getMemberUniqueId());
 			chatRoomsList.add(chatRoomListDto);
 		}
 		return chatRoomsList;

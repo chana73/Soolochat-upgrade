@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatMessageResponse {
-	private Long memberId;
+	private String memberUniqueId;
 	private String message;
 	private String sender;
 	private String memberProfileImage;
@@ -27,7 +27,7 @@ public class ChatMessageResponse {
 	private LocalDateTime createdAt;
 
 	public ChatMessageResponse(ChatMessageRequest chatMessageRequest, LocalDateTime localDateTime){
-		this.memberId = chatMessageRequest.getMemberId();
+		this.memberUniqueId = chatMessageRequest.getMemberUniqueId();
 		this.message = chatMessageRequest.getMessage();
 		this.sender = chatMessageRequest.getMemberName();
 		this.memberProfileImage = chatMessageRequest.getMemberProfileImage();

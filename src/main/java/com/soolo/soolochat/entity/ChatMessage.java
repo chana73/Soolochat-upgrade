@@ -32,12 +32,15 @@ public class ChatMessage extends Timestamped implements Serializable {
     // 메시지 타입 : 입장, 채팅
 
     private Long memberId;
+    private String memberUniqueId;
     private MessageType type; // 메시지 타입
     private String chatRoomUniqueId; // 방번호
     private String sender; // 메시지 보낸사람
     private String memberProfileImage; //프로필 이미지
     private String message; // 메// 시지
     private LocalDateTime createdAt;
+
+    private boolean isDeleted = false;
 
 
     public enum MessageType {
@@ -46,6 +49,7 @@ public class ChatMessage extends Timestamped implements Serializable {
 
     public ChatMessage(ChatMessageRequest chatMessageRequest, ChatRoom chatRoom, LocalDateTime localDateTime) {
         this.memberId = chatMessageRequest.getMemberId();
+        this.memberUniqueId = chatMessageRequest.getMemberUniqueId();
         this.chatRoomUniqueId = chatMessageRequest.getChatRoomUniqueId();
         this.sender = chatMessageRequest.getMemberName();
         this.message = chatMessageRequest.getMessage();
