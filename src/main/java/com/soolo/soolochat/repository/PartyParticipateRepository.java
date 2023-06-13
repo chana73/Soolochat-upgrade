@@ -25,7 +25,7 @@ public interface PartyParticipateRepository extends JpaRepository<PartyParticipa
 	@EntityGraph(attributePaths = {"member", "party", "chatRoom", "chatRoom.messages"})
 	List<PartyParticipate> findByisDeletedFalseAndMemberMemberUniqueIdAndAwaitingFalseOrderByChatRoomMessagesCreatedAtDesc(String memberUniqueId, Pageable pageable);
 
-	@Query("SELECT p.member.profileImage from PartyParticipate p where p.party = :party and p.awaiting = false order by p.host")
+	@Query("SELECT p.member.profileImage from PartyParticipate p where p.isDeleted = false and p.party = :party and p.awaiting = false order by p.host")
 	List<String> findByJoinImage(@Param("party") Party party);
 
 /*	@Query("select p from PartyParticipate p where p.chatRoom.chatRoomUniqueId = :chatRoomUniqueId and p.awaiting = false")
