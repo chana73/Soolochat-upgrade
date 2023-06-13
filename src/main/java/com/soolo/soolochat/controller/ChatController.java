@@ -131,10 +131,4 @@ public class ChatController {
 		}
 		return chatRoomsList;
 	}
-
-	// 로드밸런서 확인용
-	@GetMapping("/test")
-	public String main() {
-		return "main";
-	}
 }
