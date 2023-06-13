@@ -1,0 +1,13 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/soolo-chat
+
+permissions:
+  - object: /home/ubuntu/soolo-chat/
+    owner: ubuntu
+    group: ubuntu
+hooks:
+   AfterInstall:
+     - location: scripts/deploy.sh
