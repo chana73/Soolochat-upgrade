@@ -19,10 +19,14 @@ import com.soolo.soolochat.entity.ChatMessage;
  */
 public interface ChatCountRepository extends JpaRepository<ChatCount, Long> {
 
-	@Query("select c from ChatCount c where c.partyParticipate = :partyParticipate and c.readStatus = false")
-	List<ChatCount> findChatCountByPartyParticipate(@Param("partyParticipate") PartyParticipate partyParticipate);
+/*	@Query("select c from ChatCount c where c.partyParticipate = :partyParticipate and c.readStatus = false")
+	List<ChatCount> findChatCountByPartyParticipate(@Param("partyParticipate") PartyParticipate partyParticipate);*/
 
-	@Query("select count(c) from ChatCount c where c.partyParticipate = :partyParticipate and c.readStatus = false")
-	long countBychatCount(@Param("partyParticipate") PartyParticipate partyParticipate);
+	List<ChatCount> findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(PartyParticipate partyParticipate);
+
+	/*@Query("select count(c) from ChatCount c where c.partyParticipate = :partyParticipate and c.readStatus = false")
+	long countBychatCount(@Param("partyParticipate") PartyParticipate partyParticipate);*/
+
+	long countByisDeletedFalseAndPartyParticipateAndReadStatusFalse(PartyParticipate partyParticipate);
 
 }

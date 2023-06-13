@@ -32,6 +32,8 @@ public class ChatRoom extends Timestamped {
 
     private String title;
 
+    private boolean isDeleted = false;
+
     @OneToMany(mappedBy = "chatRoom")
     @OrderBy("createdAt DESC")
     private List<ChatMessage> messages;
