@@ -100,7 +100,7 @@ public class ChatController {
 	@Transactional
 	@GetMapping("/chat/messageList/{memberUniqueId}")
 	// public ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestBody ChatMessageListRequest chatMessageList) {
-	public  ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestParam Long chatRoomId, @RequestParam String chatRoomUniqueId, @RequestParam int page){
+	public ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestParam Long chatRoomId, @RequestParam String chatRoomUniqueId, @RequestParam int page){
 		ChatMessageListRequest chatMessageList = new ChatMessageListRequest(chatRoomId, chatRoomUniqueId, page);
 		PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatMessageList.getChatRoomUniqueId());
 		List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
@@ -112,7 +112,6 @@ public class ChatController {
 		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
 		List<ChatMessageList> chatMessageLists = new ArrayList<>();
 		for(ChatMessage chatMessage : chatMessages){
-
 			ChatMessageList messageList = new ChatMessageList(chatMessage);
 			chatMessageLists.add(messageList);
 		}
