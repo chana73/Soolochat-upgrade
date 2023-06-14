@@ -43,7 +43,10 @@ public class WebSecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// CSRF 설정
-		http.csrf().ignoringAntMatchers("/ws-stomp/**").disable(); // 웹소켓 경로에 대한 CSRF 비활성화
+		http.csrf()
+			.ignoringAntMatchers("/ws-stomp/**") // 웹소켓 경로에 대한 CSRF 비활성화
+			.ignoringAntMatchers("/ws-stomp/**")
+			.disable();
 		http.cors();
 		// 기본 설정인 Session 방식은 사용하지 않고 JWT 방식을 사용하기 위한 설정
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
