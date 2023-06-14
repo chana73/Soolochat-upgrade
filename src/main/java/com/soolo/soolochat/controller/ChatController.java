@@ -101,21 +101,25 @@ public class ChatController {
 	@GetMapping("/chat/messageList/{memberUniqueId}")
 	// public ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestBody ChatMessageListRequest chatMessageList) {
 	public ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestParam Long chatRoomId, @RequestParam String chatRoomUniqueId, @RequestParam int page){
-		ChatMessageListRequest chatMessageList = new ChatMessageListRequest(chatRoomId, chatRoomUniqueId, page);
-		PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatMessageList.getChatRoomUniqueId());
+		// ChatMessageListRequest chatMessageList = new ChatMessageListRequest(chatRoomId, chatRoomUniqueId, page);
+		// PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatMessageList.getChatRoomUniqueId());
+		PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatRoomUniqueId);
 		List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
 		for (ChatCount chatCount : chatCounts) {
 			chatCount.setReadStatus(true);
 		}
 		//Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10, Sort.by("createdAt").descending());
-		Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10);
-		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
+		// Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10);
+		Pageable pageable = PageRequest.of(page, 10);
+		// Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
+		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatRoomId, pageable);
 		List<ChatMessageList> chatMessageLists = new ArrayList<>();
 		for(ChatMessage chatMessage : chatMessages){
 			ChatMessageList messageList = new ChatMessageList(chatMessage);
 			chatMessageLists.add(messageList);
 		}
-		ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, chatMessageList.getPage(), chatMessages.getTotalPages()-1);
+		// ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, chatMessageList.getPage(), chatMessages.getTotalPages()-1);
+		ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, page, chatMessages.getTotalPages()-1);
 		return new ResponseEntity<>(new ResponseDto(200, "메세지 불러오기 성공.", chatMessageListResponse), HttpStatus.OK);
 	}
 
