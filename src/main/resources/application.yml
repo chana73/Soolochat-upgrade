@@ -28,3 +28,9 @@ server:
     enabled: true
     mime-types: application/json,application/xml,text/html
     min-response-size: 2048
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,metrics,env"
