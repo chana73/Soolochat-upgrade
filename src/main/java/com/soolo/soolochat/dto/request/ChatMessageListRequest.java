@@ -16,4 +16,9 @@ public class ChatMessageListRequest {
 	private String chatRoomUniqueId;
 	private int page;
 
+	public ChatMessageListRequest(Long chatRoomId, String chatRoomUniqueId, int page){
+		this.chatRoomId = chatRoomId;
+		this.chatRoomUniqueId = chatRoomUniqueId;
+		this.page = page;
+
 }
