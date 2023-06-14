@@ -21,4 +21,6 @@ public class ChatMessageListRequest {
 		this.chatRoomUniqueId = chatRoomUniqueId;
 		this.page = page;
 
+	}
+
 }
