@@ -1,6 +1,6 @@
 REPOSITORY=/home/ubuntu/app/git
 
-cd $REPOSITORY/soolo-chat/
+cd $REPOSITORY/SooloChat/
 
 echo "> Git Pull"
 
@@ -16,7 +16,7 @@ cp ./build/libs/*.jar $REPOSITORY/
 
 echo "> 현재 구동중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -f soolo-chat)
+CURRENT_PID=$(pgrep -f SooloChat)
 
 echo "$CURRENT_PID"
 
@@ -30,7 +30,7 @@ fi
 
 echo "> 새 어플리케이션 배포"
 
-JAR_NAME=$(ls $REPOSITORY/ |grep 'soolo-chat' | tail -n 1)
+JAR_NAME=$(ls $REPOSITORY/ |grep 'SooloChat' | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
