@@ -2,10 +2,10 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/soolo-chat
+    destination: /home/ubuntu/app/git/SooloChat/
 
 permissions:
-  - object: /home/ubuntu/soolo-chat/
+  - object: /home/ubuntu/app/git/SooloChat/
     owner: ubuntu
     group: ubuntu
 hooks:
