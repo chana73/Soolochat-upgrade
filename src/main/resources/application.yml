@@ -4,7 +4,7 @@ spring:
 
   redis:
     host: localhost
-    port: 6378
+    port: 6379
 
   jpa:
       properties:
@@ -23,7 +23,7 @@ spring:
       max-request-size: 10MB  # 원하는 요청 크기로 설정
 
 server:
-  port: 8081
+  port:
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html

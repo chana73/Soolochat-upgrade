@@ -53,7 +53,7 @@ public class Party extends Timestamped {
 	private int currentCount;
 
 	@Column(nullable = false)
-
+	@Builder.Default
 	// processing을 통해 모집 중 / 모집 마감 파티 리스트 활용  recruitmentStatus
 	private boolean recruitmentStatus = true;
 
@@ -70,6 +70,7 @@ public class Party extends Timestamped {
 	private LocalDateTime partyDate;
 
 	@OneToMany(mappedBy = "party", cascade = CascadeType.ALL)
+	@Builder.Default
 	private List<PartyParticipate> partyParticipates = new ArrayList<>();
 
 
@@ -85,6 +86,7 @@ public class Party extends Timestamped {
 	@Column(nullable = true)
 	private String imageUrl;
 
+	@Builder.Default
 	private boolean isDeleted = false;
 
 
