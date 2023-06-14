@@ -55,6 +55,7 @@ public class WebSecurityConfig {
 				.antMatchers(AUTH_WHITELIST)
 				.permitAll()
 				.antMatchers("/chat/**").permitAll()
+				.antMatchers("/test").permitAll()
 				.anyRequest()
 				.authenticated());// 그외의 요청들은 모두 인가 받아야 한다.
 

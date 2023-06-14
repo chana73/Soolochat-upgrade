@@ -10,4 +10,4 @@ permissions:
     group: ubuntu
 hooks:
    AfterInstall:
-     - location: scripts/deploy.sh
+     - location: /deploy.sh

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,8 @@ public class ChatService {
 			redisTemplate.delete(roomIdKey);
 		}
 	}*/
-
+	public ResponseEntity<Void> forCheck(){
+		return ResponseEntity.ok(null);
+	}
 
 }
