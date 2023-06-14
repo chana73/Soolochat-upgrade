@@ -71,6 +71,7 @@ public class WebSecurityConfig {
 		config.addAllowedOrigin("http://localhost:3000");
 		config.addAllowedOrigin("http://localhost:8080");
 		config.addAllowedOrigin("http://localhost:8081");
+		config.addAllowedOrigin("http://3.34.14.45:8080");
 		config.addAllowedOrigin("http://im-soolo.shop");
 		config.addAllowedOrigin("https://im-soolo.shop");
 		config.addAllowedOrigin("https://soolo-fe.vercel.app");
