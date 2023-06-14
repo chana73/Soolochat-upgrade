@@ -7,13 +7,15 @@ spring:
     port: 6379
 
   jpa:
-      properties:
-        hibernate:
+    database: mysql   # 추가 해준 부분
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
           show_sql: true
           format_sql: true
           hbm2ddl:
             auto: update
-      open-in-view: false
+    open-in-view: false
   thymeleaf:
       cache: 'false'
   servlet:
