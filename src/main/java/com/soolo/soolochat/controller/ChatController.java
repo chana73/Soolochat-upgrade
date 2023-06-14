@@ -4,13 +4,21 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.soolo.soolochat.connenct.Member;
@@ -62,7 +70,7 @@ public class ChatController {
 		messagingTemplate.convertAndSend("/sub/chat/chatList/" + memberUniqueId, responseDto);
 	}
 
-	@Transactional
+	/*@Transactional
 	@MessageMapping("/chat/messageList/{memberUniqueId}")
 	public void chatMessageList(@DestinationVariable("memberUniqueId") String memberUniqueId, ChatMessageListRequest chatMessageList) {
 
@@ -83,7 +91,29 @@ public class ChatController {
 		ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, chatMessageList.getPage(), chatMessages.getTotalPages()-1);
 		ResponseDto responseDto = ResponseDto.setSuccess(200, "메세지 불러오기 성공", chatMessageListResponse);
 		messagingTemplate.convertAndSend("/sub/chat/messageList/" + memberUniqueId, responseDto);
+	}*/
+	@Transactional
+	@GetMapping("/chat/messageList/{memberUniqueId}")
+	public ResponseEntity<ResponseDto> findAll(@PathVariable String memberUniqueId, @RequestBody ChatMessageListRequest chatMessageList) {
+		PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(memberUniqueId,chatMessageList.getChatRoomUniqueId());
+		List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
+		for (ChatCount chatCount : chatCounts) {
+			chatCount.setReadStatus(true);
+		}
+		//Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10, Sort.by("createdAt").descending());
+		Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10);
+		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
+		List<ChatMessageList> chatMessageLists = new ArrayList<>();
+		for(ChatMessage chatMessage : chatMessages){
+
+			ChatMessageList messageList = new ChatMessageList(chatMessage);
+			chatMessageLists.add(messageList);
+		}
+		ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, chatMessageList.getPage(), chatMessages.getTotalPages()-1);
+		return new ResponseEntity<>(new ResponseDto(200, "메세지 불러오기 성공.", chatMessageListResponse), HttpStatus.OK);
 	}
+
+
 
 	@Transactional
 	@MessageMapping("/chat/message/{chatRoomUniqueId}")
