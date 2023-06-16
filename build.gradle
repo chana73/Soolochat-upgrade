@@ -43,7 +43,7 @@ dependencies {
     implementation 'org.webjars:stomp-websocket:2.3.3-1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.0'
 
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+//    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
 //    // 로드밸런서 확인용
 //    implementation 'org.springframework.boot:spring-boot-starter-actuator'
