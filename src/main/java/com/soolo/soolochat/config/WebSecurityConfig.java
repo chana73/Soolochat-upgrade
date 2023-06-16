@@ -69,6 +69,7 @@ public class WebSecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 
+		config.setAllowCredentials(true); // json을 자바스크립트에서 처리할 수 있게 설정
 		config.addAllowedOrigin("http://localhost:3000");
 		config.addAllowedOrigin("http://localhost:8080");
 		config.addAllowedOrigin("http://localhost:8081");
@@ -85,6 +86,7 @@ public class WebSecurityConfig {
 		config.addExposedHeader(JwtUtil.AUTHORIZATION_HEADER);
 		config.addExposedHeader(JwtUtil.ACCESS_KEY);
 		config.addExposedHeader(JwtUtil.REFRESH_KEY);
+		config.addAllowedOriginPattern("*"); // 모든 ip의 응답을 허용
 		config.addAllowedMethod("*");
 		config.addAllowedHeader("*");
 		config.setAllowCredentials(true);
