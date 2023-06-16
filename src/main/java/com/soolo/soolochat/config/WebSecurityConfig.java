@@ -79,7 +79,7 @@ public class WebSecurityConfig {
 		config.addAllowedOrigin("http://im-soolo.com");
 		config.addAllowedOrigin("https://im-soolo.com");
 		config.addAllowedOrigin("http://www.im-soolo.com");
-		config.addAllowedOrigin("https://www.im-soolo.com/**");
+		config.addAllowedOrigin("https://www.im-soolo.com");
 		config.addAllowedOrigin("http://www.im-soolo.shop");
 		config.addAllowedOrigin("https://www.im-soolo.shop");
 		config.addAllowedOrigin("https://soolo-fe.vercel.app");
