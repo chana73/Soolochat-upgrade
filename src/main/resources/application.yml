@@ -35,3 +35,7 @@ server:
 #  endpoints:
 #     health:
 #       show-details: always
+
+logging:
+  level:
+    org.hibernate.type.descriptor.sql: DEBUG
