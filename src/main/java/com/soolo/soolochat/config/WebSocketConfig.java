@@ -32,7 +32,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	}
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/ws-stomp").setAllowedOrigins("http://localhost:8080", "http://localhost:3000", "http://3.34.14.45:8080", "http://localhost:8081", "http://im-soolo.shop", "https://im-soolo.shop", "http://www.im-soolo.shop", "https://www.im-soolo.shop", "http://im-soolo.com", "https://im-soolo.com", "https://www.im-soolo.com", "htth://www.im-soolo.com", "https://soolo-fe.vercel.app")
+		registry.addEndpoint("/ws-stomp").setAllowedOrigins("http://localhost:8080", "http://localhost:3000", "http://3.34.14.45:8080", "http://localhost:8081", "http://im-soolo.shop", "https://im-soolo.shop", "http://www.im-soolo.shop", "https://www.im-soolo.shop", "http://im-soolo.com", "https://im-soolo.com", "https://www.im-soolo.com", "http://www.im-soolo.com", "https://soolo-fe.vercel.app")
 			.withSockJS();
 	}
 
