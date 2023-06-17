@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ChatMessageList {
+	private Long memberId;
 	private String memberUniqueId;
 	private String sender;
 	private String memberProfileImage;
@@ -25,6 +26,7 @@ public class ChatMessageList {
 	private LocalDateTime createdAt;
 
 	public ChatMessageList(ChatMessage chatMessage){
+		this.memberId = chatMessage.getMemberId();
 		this.memberUniqueId = chatMessage.getMemberUniqueId();
 		this.sender = chatMessage.getSender();
 		this.memberProfileImage = chatMessage.getMemberProfileImage();
