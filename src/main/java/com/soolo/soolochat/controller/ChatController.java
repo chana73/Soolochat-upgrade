@@ -139,15 +139,15 @@ public class ChatController {
 			ChatMessage chatMessage = new ChatMessage(chatMessageRequest, chatRoom, createdAt);
 			chatMessageRepository.save(chatMessage);
 			for (PartyParticipate partyParticipate : partyParticipateList) {
-				ChatCount chatCount = new ChatCount(partyParticipate, chatMessage);
-				if(partyParticipate.getMember().getMemberUniqueId().equals(chatMessageRequest.getMemberUniqueId())){
-					chatCount.setReadStatus(true);
+
+				if(!partyParticipate.getMember().getMemberUniqueId().equals(chatMessageRequest.getMemberUniqueId())){
+					ChatCount chatCount = new ChatCount(partyParticipate, chatMessage);
+					chatCountRepository.save(chatCount);
+					List<ChatRoomListDto> chatRoomsList = getList(partyParticipate.getMember().getMemberUniqueId());
+					ResponseDto responseRoomDto = ResponseDto.setSuccess(200, "채팅방 조회 성공", chatRoomsList);
+					//sub주소로 메세지를 보내는
+					messagingTemplate.convertAndSend("/sub/chat/chatList/" + partyParticipate.getMember().getMemberUniqueId(), responseRoomDto);
 				}
-				chatCountRepository.save(chatCount);
-				List<ChatRoomListDto> chatRoomsList = getList(partyParticipate.getMember().getMemberUniqueId());
-				ResponseDto responseRoomDto = ResponseDto.setSuccess(200, "채팅방 조회 성공", chatRoomsList);
-				//sub주소로 메세지를 보내는
-				messagingTemplate.convertAndSend("/sub/chat/chatList/" + partyParticipate.getMember().getMemberUniqueId(), responseRoomDto);
 			}
 			messagingTemplate.convertAndSend("/sub/chat/message/" + chatRoomUniqueId, responseDto);
 		}
