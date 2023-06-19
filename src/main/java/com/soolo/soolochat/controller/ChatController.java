@@ -140,7 +140,7 @@ public class ChatController {
 			chatMessageRepository.save(chatMessage);
 			for (PartyParticipate partyParticipate : partyParticipateList) {
 				ChatCount chatCount = new ChatCount(partyParticipate, chatMessage);
-				if(partyParticipate.getMember().getMemberUniqueId() == chatMessageRequest.getMemberUniqueId()){
+				if(partyParticipate.getMember().getMemberUniqueId().equals(chatMessageRequest.getMemberUniqueId())){
 					chatCount.setReadStatus(true);
 				}
 				chatCountRepository.save(chatCount);
