@@ -144,9 +144,6 @@ public class ChatController {
 			chatMessageRepository.save(chatMessage);
 			for (PartyParticipate partyParticipate : partyParticipateList) {
 				ChatCount chatCount = new ChatCount(partyParticipate, chatMessage);
-				if(partyParticipate.isHost()){
-					chatCount.setReadStatus(true);
-				}
 				chatCountRepository.save(chatCount);
 				List<ChatRoomListDto> chatRoomsList = getList(partyParticipate.getMember().getMemberUniqueId());
 				ResponseDto responseRoomDto = ResponseDto.setSuccess(200, "채팅방 조회 성공", chatRoomsList);
