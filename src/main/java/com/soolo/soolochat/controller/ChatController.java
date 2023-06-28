@@ -2,6 +2,8 @@ package com.soolo.soolochat.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -110,7 +113,7 @@ public class ChatController {
 		}
 		//Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10, Sort.by("createdAt").descending());
 		// Pageable pageable = PageRequest.of(chatMessageList.getPage(), 10);
-		Pageable pageable = PageRequest.of(page, 10);
+		Pageable pageable = PageRequest.of(page, 20);
 		// Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatMessageList.getChatRoomId(), pageable);
 		Page<ChatMessage> chatMessages = chatMessageRepository.findByisDeletedFalseAndChatRoomChatRoomIdOrderByCreatedAtDesc(chatRoomId, pageable);
 		List<ChatMessageList> chatMessageLists = new ArrayList<>();
@@ -118,6 +121,7 @@ public class ChatController {
 			ChatMessageList messageList = new ChatMessageList(chatMessage);
 			chatMessageLists.add(messageList);
 		}
+		Collections.sort(chatMessageLists, Comparator.comparing(ChatMessageList::getCreatedAt));
 		// ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, chatMessageList.getPage(), chatMessages.getTotalPages()-1);
 		ChatMessageListResponse chatMessageListResponse = new ChatMessageListResponse(chatMessageLists, page, chatMessages.getTotalPages()-1);
 		return new ResponseEntity<>(new ResponseDto(200, "메세지 불러오기 성공.", chatMessageListResponse), HttpStatus.OK);
@@ -149,6 +153,8 @@ public class ChatController {
 			messagingTemplate.convertAndSend("/sub/chat/message/" + chatRoomUniqueId, responseDto);
 		}
 		else{
+			System.out.println("***********");
+			System.out.println("ReadStatus");
 			PartyParticipate partyParticipate = partyParticipateRepository.findByisDeletedFalseAndMemberMemberUniqueIdAndChatRoomChatRoomUniqueId(chatMessageRequest.getMemberUniqueId(), chatRoomUniqueId);
 			List<ChatCount> chatCounts = chatCountRepository.findByisDeletedFalseAndReadStatusFalseAndPartyParticipate(partyParticipate);
 			for (ChatCount chatCount : chatCounts) {
