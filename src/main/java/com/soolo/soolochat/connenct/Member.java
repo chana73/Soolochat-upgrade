@@ -51,7 +51,7 @@ public class Member extends Timestamped {
 
 	private String social;
 
-	private LocalDateTime createdAt;
+	private LocalDateTime memberCreatedAt;
 
 
 }

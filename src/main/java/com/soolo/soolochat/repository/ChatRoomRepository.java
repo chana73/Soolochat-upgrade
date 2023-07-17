@@ -4,11 +4,12 @@ package com.soolo.soolochat.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 import com.soolo.soolochat.entity.ChatRoom;
 
 @Repository
-public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
+public interface ChatRoomRepository extends MongoRepository<ChatRoom, Long> {
 
     List<ChatRoom> findAll();
 

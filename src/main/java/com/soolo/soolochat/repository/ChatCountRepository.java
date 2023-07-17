@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.soolo.soolochat.connenct.PartyParticipate;
@@ -17,7 +18,7 @@ import com.soolo.soolochat.entity.ChatMessage;
  * @author        : mycom
  * @since         : 2023-06-07
  */
-public interface ChatCountRepository extends JpaRepository<ChatCount, Long> {
+public interface ChatCountRepository extends MongoRepository<ChatCount, Long> {
 
 /*	@Query("select c from ChatCount c where c.partyParticipate = :partyParticipate and c.readStatus = false")
 	List<ChatCount> findChatCountByPartyParticipate(@Param("partyParticipate") PartyParticipate partyParticipate);*/

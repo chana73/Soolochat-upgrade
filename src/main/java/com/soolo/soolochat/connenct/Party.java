@@ -63,9 +63,9 @@ public class Party extends Timestamped {
 	private Double latitude;
 	private Double longitude;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private LocalDateTime createdAt;
+	private LocalDateTime partyCreatedAt;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-	private LocalDateTime modifiedAt;
+	private LocalDateTime partyModifiedAt;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
 	private LocalDateTime partyDate;
 

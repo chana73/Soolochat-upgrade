@@ -38,7 +38,7 @@ public class ChatMessage extends Timestamped implements Serializable {
     private String sender; // 메시지 보낸사람
     private String memberProfileImage; //프로필 이미지
     private String message; // 메// 시지
-    private LocalDateTime createdAt;
+    private LocalDateTime messageCreatedAt;
 
     private boolean isDeleted = false;
 
@@ -54,7 +54,7 @@ public class ChatMessage extends Timestamped implements Serializable {
         this.sender = chatMessageRequest.getMemberName();
         this.message = chatMessageRequest.getMessage();
         this.memberProfileImage = chatMessageRequest.getMemberProfileImage();
-        this.createdAt = localDateTime;
+        this.messageCreatedAt = localDateTime;
         this.chatRoom = chatRoom;
     }
 

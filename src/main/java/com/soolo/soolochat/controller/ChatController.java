@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -170,7 +171,11 @@ public class ChatController {
 		for(PartyParticipate partyParticipate : partyParticipateList){
 			PartyParticipate participate = partyParticipateRepository.findByisDeletedFalseAndHostTrueAndParty(partyParticipate.getParty());
 			long readNoneMessage = chatCountRepository.countByisDeletedFalseAndPartyParticipateAndReadStatusFalse(partyParticipate);
-			List<String> imageList = partyParticipateRepository.findByJoinImage(partyParticipate.getParty());
+			List<PartyParticipate> participateList = partyParticipateRepository.findByisDeletedFalseAndPartyAndAwaitingFalseOrderByHost(partyParticipate.getParty());
+			List<String> imageList = new ArrayList<>();
+			for(PartyParticipate participateForUrl : participateList){
+				imageList.add(participateForUrl.getMember().getProfileImage());
+			}
 			ChatRoomListDto chatRoomListDto = new ChatRoomListDto(partyParticipate, imageList, readNoneMessage, participate.getMember().getMemberUniqueId());
 			chatRoomsList.add(chatRoomListDto);
 		}

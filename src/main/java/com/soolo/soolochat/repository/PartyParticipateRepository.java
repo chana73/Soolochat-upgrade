@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.soolo.soolochat.connenct.Member;
@@ -16,7 +17,7 @@ import com.soolo.soolochat.connenct.PartyParticipate;
 /**
  * i
  */
-public interface PartyParticipateRepository extends JpaRepository<PartyParticipate, Long> {
+public interface PartyParticipateRepository extends MongoRepository<PartyParticipate, Long> {
 
 
 	/*@Query("SELECT p From PartyParticipate p join fetch p.member join fetch p.party join fetch p.chatRoom cr left join fetch cr.messages m " +
@@ -25,8 +26,9 @@ public interface PartyParticipateRepository extends JpaRepository<PartyParticipa
 	@EntityGraph(attributePaths = {"member", "party", "chatRoom", "chatRoom.messages"})
 	List<PartyParticipate> findByisDeletedFalseAndMemberMemberUniqueIdAndAwaitingFalseOrderByChatRoomMessagesCreatedAtDesc(String memberUniqueId, Pageable pageable);
 
-	@Query("SELECT p.member.profileImage from PartyParticipate p where p.isDeleted = false and p.party = :party and p.awaiting = false order by p.host")
-	List<String> findByJoinImage(@Param("party") Party party);
+	// @Query("SELECT p.member.profileImage from PartyParticipate p where p.isDeleted = false and p.party = :party and p.awaiting = false order by p.host")
+	// List<String> findByJoinImage(@Param("party") Party party);
+	List<PartyParticipate> findByisDeletedFalseAndPartyAndAwaitingFalseOrderByHost(Party party);
 
 /*	@Query("select p from PartyParticipate p where p.chatRoom.chatRoomUniqueId = :chatRoomUniqueId and p.awaiting = false")
 	List<PartyParticipate> findMemberBychatRoomUniqueId(@Param("chatRoomUniqueId") String chatRoomUniqueId);*/
