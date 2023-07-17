@@ -7,8 +7,8 @@ spring:
     port: 6379
 
   jpa:
-    database: mysql   # 추가 해준 부분
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database: mysql   # 추가 해준 부분
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties:
       hibernate:
           show_sql: true
@@ -25,7 +25,7 @@ spring:
       max-request-size: 10MB  # 원하는 요청 크기로 설정
 
 server:
-  port:
+  port: 5501
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html
