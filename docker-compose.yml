@@ -1,0 +1,60 @@
+#version: '3'
+#services:
+#  mongodb:
+#    image: mongo
+#    restart: always
+#    ports:
+#      - 27017:27017
+#    volumes:
+#      - mongodata:/data/db
+#
+#  spring-server:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    restart: always
+#    ports:
+#      - 5501:5501
+#    depends_on:
+#      - mongodb
+#    environment:
+#      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/mydatabase
+#
+#volumes:
+#  mongodata:
+
+version: "3"
+services:
+  app:
+    build: src/main/java
+    restart: always
+    ports:
+      - 5501:5501
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    networks:
+      - main-network
+
+  mongo:
+    image: "mongo:new"
+    container_name: mongo
+    hostname: mongo
+    networks:
+      - main-network
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=soolo
+      - MONGO_INITDB_ROOT_PASSWORD=soolo
+    restart: always
+    ports:
+      - 27017:27017
+    command: [ "--bind_ip", "0.0.0.0" ]
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
+networks:
+  main-network:
+    driver: bridge
